@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>By The Way Wash Plus — Magliman, San Fernando Pampanga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #090909;
+      --black2: #0f0f0f;
+      --black3: #181818;
+      --gmid:   #505050;
+      --glt:    #858585;
+      --silver: #BEBEBE;
+      --white:  #F2F2F2;
+      --pure:   #FFFFFF;
+      --D: 'Anton', sans-serif;
+      --C: 'Barlow Condensed', sans-serif;
+      --B: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--B);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY (subtle film noise on every section) ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left  { opacity: 0; transform: translateX(-28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal-left.visible  { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* staggered children */
+    .stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .5s ease, transform .5s ease; }
+    .stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:.05s; }
+    .stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.15s; }
+    .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.25s; }
+    .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.35s; }
+    .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:.45s; }
+    .stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:.55s; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 5%;
+      transition: background .35s, border-color .35s, backdrop-filter .35s;
+    }
+    nav.scrolled {
+      background: rgba(9,9,9,.88);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      backdrop-filter: blur(18px);
+    }
+
+    .logo { text-decoration: none; }
+    .logo-main { font-family: var(--D); font-size: 1.6rem; letter-spacing: .07em; color: var(--pure); line-height: 1; display: block; }
+    .logo-sub  { font-size: .55rem; font-weight: 700; letter-spacing: .28em; color: var(--glt); text-transform: uppercase; margin-top: 2px; display: block; }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a { color: var(--silver); text-decoration: none; font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover { color: var(--pure); }
+    .nav-book {
+      background: var(--pure) !important; color: var(--black) !important;
+      padding: 9px 22px; font-weight: 700 !important;
+      transition: opacity .2s, transform .2s !important;
+    }
+    .nav-book:hover { opacity: .88; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=1800&q=80') center/cover no-repeat;
+    }
+    /* dark gradient + subtle vignette */
+    .hero-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, transparent 30%, rgba(9,9,9,.55) 100%),
+        linear-gradient(to top, rgba(9,9,9,.97) 0%, rgba(9,9,9,.5) 45%, rgba(9,9,9,.2) 100%);
+    }
+
+    /* big ghost text */
+    .hero-wm {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%) rotate(-10deg);
+      font-family: var(--D); font-size: clamp(14rem,26vw,24rem);
+      color: rgba(255,255,255,.025); white-space: nowrap; pointer-events: none;
+      letter-spacing: -.02em; line-height: .85; z-index: 1; user-select: none;
+    }
+
+    /* soft glow blob behind headline */
+    .hero-glow {
+      position: absolute; bottom: 15%; left: 3%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,.04) 0%, transparent 70%);
+      pointer-events: none; z-index: 1;
+    }
+
+    .hero-content { position: relative; z-index: 2; padding: 0 5% 90px; max-width: 800px; }
+
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid rgba(255,255,255,.16); padding: 7px 16px;
+      background: rgba(255,255,255,.04); backdrop-filter: blur(8px);
+      font-size: .7rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--silver); margin-bottom: 1.8rem;
+    }
+    .hero-pill span { width: 6px; height: 6px; border-radius: 50%; background: var(--pure); display: inline-block; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .hero h1 {
+      font-family: var(--D); font-size: clamp(4.5rem, 12vw, 10.5rem);
+      line-height: .88; letter-spacing: .01em; color: var(--pure); margin-bottom: .3rem;
+    }
+    .hero h1 .out { -webkit-text-stroke: 2px var(--pure); color: transparent; }
+
+    .hero-sub {
+      font-family: var(--C); font-style: italic; font-size: clamp(1rem, 2.2vw, 1.55rem);
+      color: var(--silver); letter-spacing: .12em; text-transform: uppercase;
+      border-left: 3px solid rgba(255,255,255,.6); padding-left: 14px; line-height: 1.3;
+      margin-bottom: 2.6rem;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn { display: inline-block; text-decoration: none; font-weight: 700; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; transition: all .18s; cursor: pointer; border: none; }
+    .btn-w { background: var(--pure); color: var(--black); padding: 16px 36px; }
+    .btn-w:hover { background: #e5e5e5; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,255,255,.12); }
+    .btn-o { color: var(--pure); border: 1.5px solid rgba(255,255,255,.3); padding: 15px 34px; background: rgba(255,255,255,.04); backdrop-filter: blur(6px); }
+    .btn-o:hover { border-color: var(--pure); background: rgba(255,255,255,.08); }
+    .btn-dk { background: var(--black); color: var(--pure); padding: 16px 40px; border: 1px solid rgba(255,255,255,.12); }
+    .btn-dk:hover { background: var(--black3); transform: translateY(-2px); }
+
+    .hero-stats { position: absolute; right: 0; bottom: 0; z-index: 2; display: flex; }
+    .hstat {
+      padding: 22px 34px; border-left: 1px solid rgba(255,255,255,.08);
+      background: rgba(9,9,9,.6); backdrop-filter: blur(16px); text-align: center;
+    }
+    .hstat-n { font-family: var(--D); font-size: 2.2rem; color: var(--pure); line-height: 1; }
+    .hstat-l { font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--glt); margin-top: 4px; }
+
+    /* ── TICKER ── */
+    .ticker { background: var(--pure); color: var(--black); padding: 13px 0; overflow: hidden; white-space: nowrap; }
+    .ticker-t { display: inline-flex; animation: tick 24s linear infinite; }
+    .ti { font-family: var(--D); font-size: .95rem; letter-spacing: .14em; padding: 0 2rem; display: inline-flex; align-items: center; gap: 2rem; }
+    .ti::after { content: '//'; color: #aaa; }
+    @keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 5%; }
+
+    .ey { font-size: .68rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--glt); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
+    .ey::before { content: ''; display: block; width: 22px; height: 1px; background: var(--gmid); }
+    .ey-center { justify-content: center; }
+    .ey-center::before { display: none; }
+
+    .st { font-family: var(--D); font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: .92; color: var(--pure); letter-spacing: .01em; margin-bottom: 1.3rem; }
+    .sb { color: var(--glt); font-weight: 300; max-width: 420px; line-height: 1.75; font-size: .94rem; }
+
+    /* ── SECTION BACKGROUND VARIANTS ── */
+    /* Services — very faint tiled diagonal lines */
+    .services {
+      background: var(--black2);
+      position: relative;
+    }
+    .services::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: repeating-linear-gradient(
+        -55deg,
+        rgba(255,255,255,.012) 0px,
+        rgba(255,255,255,.012) 1px,
+        transparent 1px,
+        transparent 38px
+      );
+    }
+
+    /* Gallery — plain dark */
+    .gallery { background: var(--black); padding: 80px 5%; }
+
+    /* How — faint radial glow center */
+    .how {
+      background: var(--black2);
+      position: relative;
+      overflow: hidden;
+    }
+    .how::before {
+      content: '';
+      position: absolute; top: -20%; right: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,.025) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Food — very faint dot grid */
+    .food {
+      background: var(--black);
+      position: relative;
+    }
+    .food::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: .18;
+    }
+
+    /* Why — faint radial glow left */
+    .why {
+      background: var(--black2);
+      position: relative;
+      overflow: hidden;
+    }
+    .why::before {
+      content: '';
+      position: absolute; bottom: -20%; left: -10%;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,255,255,.022) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Reviews — subtle cross-hatch */
+    .reviews {
+      background: var(--black);
+      position: relative;
+    }
+    .reviews::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 60px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 60px);
+    }
+
+    /* ── SERVICES ── */
+    .services-hd { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; margin-bottom: 3.8rem; flex-wrap: wrap; position: relative; }
+
+    .sgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); border: 1px solid rgba(255,255,255,.07); position: relative; }
+    .sc {
+      padding: 2.6rem 2rem; border-right: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07);
+      position: relative; overflow: hidden; transition: background .3s;
+      background: rgba(255,255,255,.0);
+    }
+    .sc:hover { background: rgba(255,255,255,.03); }
+    .sc::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(to right, transparent, var(--pure), transparent);
+      transform:scaleX(0); transform-origin:left; transition:transform .35s;
+    }
+    .sc:hover::before { transform:scaleX(1); }
+
+    .sc-n { font-family:var(--D); font-size:3.5rem; color:rgba(255,255,255,.04); line-height:1; margin-bottom:1rem; }
+    .sc-badge { display:inline-block; background:var(--pure); color:var(--black); font-size:.6rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; padding:4px 10px; margin-bottom:.8rem; }
+    .sc-name { font-family:var(--D); font-size:1.85rem; color:var(--pure); letter-spacing:.03em; margin-bottom:.7rem; line-height:1; }
+    .sc-desc { color:var(--glt); font-size:.86rem; line-height:1.7; margin-bottom:1.8rem; }
+    .sc-price { font-family:var(--D); font-size:2.6rem; color:var(--pure); line-height:1; border-top:1px solid rgba(255,255,255,.09); padding-top:1.3rem; }
+    .sc-price sub { font-family:var(--B); font-size:.78rem; color:var(--gmid); font-weight:400; vertical-align:middle; margin-left:4px; }
+    .sc-perks { list-style:none; margin-top:1.1rem; }
+    .sc-perks li { color:var(--silver); font-size:.83rem; padding:5px 0; display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,.05); }
+    .sc-perks li::before { content:'—'; color:var(--gmid); font-size:.75rem; }
+
+    /* ── GALLERY ── */
+    .gallery-hd { display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; margin-bottom:2.5rem; flex-wrap:wrap; }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 240px 240px;
+      gap: 5px;
+    }
+    .pg1 { grid-column:1/6;  grid-row:1/2; }
+    .pg2 { grid-column:6/9;  grid-row:1/2; }
+    .pg3 { grid-column:9/13; grid-row:1/3; }
+    .pg4 { grid-column:1/4;  grid-row:2/3; }
+    .pg5 { grid-column:4/6;  grid-row:2/3; }
+    .pg6 { grid-column:6/9;  grid-row:2/3; }
+
+    .pgp { overflow:hidden; position:relative; }
+    .pgp img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(35%) brightness(.9); transition:filter .45s, transform .45s; }
+    .pgp:hover img { filter:grayscale(0%) brightness(1); transform:scale(1.045); }
+    .pgp-label {
+      position:absolute; bottom:0; left:0; right:0; padding:12px 14px;
+      background:linear-gradient(to top, rgba(0,0,0,.8) 0%, transparent 100%);
+      font-size:.65rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--silver);
+      opacity:0; transition:opacity .3s; transform:translateY(4px); transition:opacity .3s, transform .3s;
+    }
+    .pgp:hover .pgp-label { opacity:1; transform:translateY(0); }
+
+    /* ── HOW IT WORKS ── */
+    .how-layout { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; position:relative; }
+
+    .steps { display:flex; flex-direction:column; }
+    .step { display:flex; gap:2rem; align-items:flex-start; padding:2rem 0; border-bottom:1px solid rgba(255,255,255,.07); transition:border-color .2s; }
+    .step:first-child { padding-top:0; }
+    .step:hover { border-color: rgba(255,255,255,.18); }
+    .step-n { font-family:var(--D); font-size:3rem; color:rgba(255,255,255,.09); line-height:1; flex-shrink:0; width:52px; transition:color .2s; }
+    .step:hover .step-n { color:rgba(255,255,255,.22); }
+    .step h4 { font-family:var(--C); font-size:1.3rem; font-style:italic; color:var(--pure); letter-spacing:.06em; text-transform:uppercase; margin-bottom:.4rem; }
+    .step p { color:var(--glt); font-size:.87rem; line-height:1.65; }
+
+    .how-visual { position:sticky; top:110px; }
+    .how-photo-wrap { position:relative; overflow:hidden; }
+    .how-photo { width:100%; aspect-ratio:3/4; object-fit:cover; filter:grayscale(20%); display:block; }
+    /* subtle corner frame */
+    .how-photo-wrap::before,
+    .how-photo-wrap::after {
+      content:''; position:absolute; width:40px; height:40px; z-index:2; pointer-events:none;
+    }
+    .how-photo-wrap::before { top:12px; left:12px; border-top:1.5px solid rgba(255,255,255,.4); border-left:1.5px solid rgba(255,255,255,.4); }
+    .how-photo-wrap::after  { bottom:12px; right:12px; border-bottom:1.5px solid rgba(255,255,255,.4); border-right:1.5px solid rgba(255,255,255,.4); }
+
+    /* ── FOOD STALL ── */
+    .menu-section-label {
+      font-family: var(--D); font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--pure); letter-spacing: .1em;
+      padding-bottom: 1rem; margin-bottom: 1.8rem;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; gap: 14px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .menu-card {
+      background: var(--black);
+      transition: background .25s;
+      overflow: hidden;
+      position: relative;
+    }
+    .menu-card:hover { background: rgba(255,255,255,.03); }
+
+    .menu-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .menu-img-wrap img {
+      width:100%; height:100%; object-fit:cover; display:block;
+      filter:grayscale(30%) brightness(.85);
+      transition:transform .45s, filter .45s;
+    }
+    .menu-card:hover .menu-img-wrap img { transform:scale(1.06); filter:grayscale(0%) brightness(1); }
+
+    /* frosted label on image */
+    .menu-img-label {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:14px 14px 10px;
+      background:linear-gradient(to top, rgba(0,0,0,.82) 0%, transparent 100%);
+    }
+    .menu-img-label span {
+      font-family:var(--D); font-size:.75rem; letter-spacing:.18em; color:rgba(255,255,255,.5);
+    }
+    .menu-new {
+      position:absolute; top:10px; right:10px;
+      background:var(--pure); color:var(--black);
+      font-size:.58rem; font-weight:800; letter-spacing:.12em; padding:3px 8px;
+    }
+
+    .menu-body { padding:1.3rem 1.4rem 1.5rem; }
+    .menu-name { font-family:var(--D); font-size:1.3rem; color:var(--pure); letter-spacing:.03em; line-height:1.1; margin-bottom:.2rem; }
+    .menu-sub { font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--gmid); margin-bottom:.7rem; }
+    .menu-desc { color:var(--glt); font-size:.82rem; line-height:1.65; margin-bottom:.9rem; }
+    .menu-tag-row { display:flex; gap:.45rem; flex-wrap:wrap; }
+    .mtag {
+      font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.45); padding:3px 9px;
+    }
+
+    .food-cta-strip {
+      margin-top:3.5rem; padding:2.5rem 3rem;
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.02);
+      backdrop-filter: blur(6px);
+      text-align:center;
+    }
+    .food-cta-strip p:first-child { font-family:var(--D); font-size:1.6rem; color:var(--pure); letter-spacing:.07em; margin-bottom:.5rem; }
+    .food-cta-strip p:last-child { color:var(--glt); font-size:.88rem; }
+
+    /* ── WHY US ── */
+    .why-hd { display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; margin-bottom:3.5rem; flex-wrap:wrap; position:relative; }
+    .wgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); border:1px solid rgba(255,255,255,.07); position:relative; }
+    .wc {
+      padding:2.4rem 2rem; border-right:1px solid rgba(255,255,255,.07); border-bottom:1px solid rgba(255,255,255,.07);
+      transition:background .25s;
+      position:relative; overflow:hidden;
+    }
+    .wc::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+      background:linear-gradient(to right, transparent, rgba(255,255,255,.18), transparent);
+      opacity:0; transition:opacity .3s;
+    }
+    .wc:hover { background:rgba(255,255,255,.025); }
+    .wc:hover::after { opacity:1; }
+    .wc-icon { font-size:1.6rem; margin-bottom:1rem; display:block; }
+    .wc h4 { font-family:var(--C); font-size:1.2rem; font-style:italic; color:var(--pure); letter-spacing:.05em; text-transform:uppercase; margin-bottom:.6rem; }
+    .wc p { color:var(--glt); font-size:.85rem; line-height:1.65; }
+
+    /* ── REVIEWS ── */
+    .reviews-hd { text-align:center; margin-bottom:3.5rem; position:relative; }
+    .reviews-hd .sb { margin:0 auto; text-align:center; }
+
+    .rgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1px; background:rgba(255,255,255,.06); position:relative; }
+    .rc {
+      background:var(--black); padding:2.3rem; transition:background .2s;
+      position:relative;
+    }
+    .rc::before {
+      content:'"'; position:absolute; top:1rem; right:1.5rem;
+      font-family:Georgia,serif; font-size:5rem; line-height:1;
+      color:rgba(255,255,255,.04); pointer-events:none;
+    }
+    .rc:hover { background:rgba(255,255,255,.025); }
+    .stars { font-size:.85rem; letter-spacing:3px; color:var(--white); margin-bottom:1.1rem; }
+    .rc-text { color:var(--silver); font-size:.9rem; line-height:1.8; font-style:italic; margin-bottom:1.5rem; }
+    .rc-author { display:flex; align-items:center; gap:.8rem; }
+    .av { width:40px; height:40px; border:1px solid rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; color:var(--white); flex-shrink:0; font-family:var(--C); font-style:italic; }
+    .av-n { font-weight:600; font-size:.88rem; color:var(--white); }
+    .av-t { font-size:.72rem; color:var(--glt); }
+
+    /* ── MARQUEE ── */
+    .mq { background:rgba(255,255,255,.02); border-top:1px solid rgba(255,255,255,.06); border-bottom:1px solid rgba(255,255,255,.06); padding:24px 0; overflow:hidden; }
+    .mq-t { display:inline-flex; animation:mqr 22s linear infinite; }
+    .mqi { font-family:var(--D); font-size:1.05rem; color:rgba(255,255,255,.09); letter-spacing:.16em; padding:0 3rem; white-space:nowrap; display:inline-flex; align-items:center; gap:3rem; }
+    .dot { width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,.2); display:inline-block; }
+    @keyframes mqr { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* ── LOCATION ── */
+    .location { background:var(--black2); padding:0; position:relative; overflow:hidden; }
+    .location::before {
+      content:''; position:absolute; top:-30%; right:-20%;
+      width:700px; height:700px;
+      background:radial-gradient(circle, rgba(255,255,255,.02) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    .loc-layout { display:grid; grid-template-columns:1fr 1.4fr; min-height:520px; }
+    .loc-info { padding:80px 5%; display:flex; flex-direction:column; justify-content:center; position:relative; z-index:1; }
+    .loc-details { display:flex; flex-direction:column; gap:1.5rem; margin-top:2.5rem; }
+    .ld { display:flex; gap:1rem; align-items:flex-start; }
+    .ld-icon { font-size:1.1rem; flex-shrink:0; margin-top:2px; opacity:.7; }
+    .ld h5 { font-size:.68rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gmid); margin-bottom:.3rem; }
+    .ld p { color:var(--silver); font-size:.9rem; line-height:1.5; }
+    .map-frame { width:100%; height:100%; min-height:520px; border:none; display:block; filter:grayscale(1) invert(1) contrast(.88) brightness(.9); }
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--pure); color:var(--black);
+      text-align:center; padding:110px 5%; position:relative; overflow:hidden;
+    }
+    /* faint diagonal stripes on CTA */
+    .cta::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(0,0,0,.025) 0px, rgba(0,0,0,.025) 1px,
+        transparent 1px, transparent 32px
+      );
+    }
+    .cta-wm { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:var(--D); font-size:clamp(8rem,22vw,20rem); color:rgba(0,0,0,.03); white-space:nowrap; pointer-events:none; line-height:1; }
+    .cta h2 { font-family:var(--D); font-size:clamp(3rem,9vw,7.5rem); color:var(--black); line-height:.9; margin-bottom:1.1rem; position:relative; }
+    .cta h2 .out-dk { -webkit-text-stroke:2.5px var(--black); color:transparent; }
+    .cta p { color:#666; font-size:1rem; font-weight:300; margin-bottom:2.5rem; position:relative; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black2);
+      padding:60px 5% 28px;
+      border-top:1px solid rgba(255,255,255,.06);
+      position:relative;
+    }
+    footer::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size:32px 32px; opacity:.1;
+    }
+    .ft { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; padding-bottom:3rem; border-bottom:1px solid rgba(255,255,255,.06); position:relative; }
+    .fl { font-family:var(--D); font-size:2.1rem; color:var(--pure); letter-spacing:.07em; line-height:1; margin-bottom:.4rem; }
+    .flt { font-family:var(--C); font-style:italic; font-size:.85rem; letter-spacing:.18em; color:var(--gmid); text-transform:uppercase; margin-bottom:1.2rem; }
+    .fbrand p { color:var(--glt); font-size:.84rem; line-height:1.7; max-width:230px; }
+    .fc h5 { font-size:.66rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gmid); margin-bottom:1.2rem; }
+    .fc ul { list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+    .fc a { color:var(--glt); text-decoration:none; font-size:.85rem; transition:color .2s; }
+    .fc a:hover { color:var(--pure); }
+    .fb { display:flex; justify-content:space-between; align-items:center; padding-top:1.5rem; gap:1rem; flex-wrap:wrap; position:relative; }
+    .fb p { color:var(--gmid); font-size:.77rem; }
+
+    /* ── SOCIAL BAR ── */
+    .social-bar {
+      background:var(--black); border-top:1px solid rgba(255,255,255,.04);
+      padding:17px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+    }
+    .sb-label { font-size:.68rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gmid); }
+    .sb-links { display:flex; gap:1.5rem; }
+    .sb-links a { color:var(--glt); text-decoration:none; font-size:.8rem; font-weight:600; letter-spacing:.1em; transition:color .2s; }
+    .sb-links a:hover { color:var(--pure); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:960px){
+      .how-layout,.loc-layout { grid-template-columns:1fr; }
+      .how-visual,.loc-map { display:none; }
+      .loc-info { padding:70px 4%; }
+      .ft { grid-template-columns:1fr 1fr; }
+      .hero-stats { position:static; margin-top:2.5rem; flex-wrap:wrap; }
+      .photo-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+      .pg1,.pg2,.pg3,.pg4,.pg5,.pg6 { grid-column:auto; grid-row:auto; }
+    }
+    @media(max-width:600px){
+      nav { padding:14px 4%; }
+      .nav-links { display:none; }
+      section { padding:70px 4%; }
+      .photo-grid { grid-template-columns:1fr; }
+      .ft { grid-template-columns:1fr; gap:2rem; }
+    }
+    @media(prefers-reduced-motion:reduce){
+      .ticker-t,.mq-t,.reveal,.reveal-left,.reveal-right,.stagger>* { animation:none !important; transition:none !important; opacity:1 !important; transform:none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="#">
+    <span class="logo-main">BY THE WAY</span>
+    <span class="logo-sub">Wash Plus · San Fernando, Pampanga</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#food">Food Stall</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#book" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-img"></div>
+  <div class="hero-wm">BTW</div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-pill"><span></span> Magliman, San Fernando Pampanga</div>
+    <h1>BY THE<br><span class="out">WAY.</span></h1>
+    <div class="hero-sub">Wash Plus — Car Wash &amp; Food Stall<br>Clean Car, Full Stomach, Every Visit</div>
+    <div class="hero-btns">
+      <a href="#book" class="btn btn-w">Book a Wash</a>
+      <a href="#services" class="btn btn-o">View Packages</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">5K+</div><div class="hstat-l">Cars Washed</div></div>
+    <div class="hstat"><div class="hstat-n">4.9★</div><div class="hstat-l">FB Rating</div></div>
+    <div class="hstat"><div class="hstat-n">5.5K</div><div class="hstat-l">Followers</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-t">
+    <span class="ti">BY THE WAY WASH PLUS</span><span class="ti">MAGLIMAN SAN FERNANDO</span><span class="ti">CAR WASH & FOOD STALL</span><span class="ti">OPEN DAILY</span><span class="ti">BY THE WAY WASH PLUS</span><span class="ti">MAGLIMAN SAN FERNANDO</span><span class="ti">CAR WASH & FOOD STALL</span><span class="ti">OPEN DAILY</span><span class="ti">BY THE WAY WASH PLUS</span><span class="ti">MAGLIMAN SAN FERNANDO</span><span class="ti">CAR WASH & FOOD STALL</span><span class="ti">OPEN DAILY</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-hd reveal">
+    <div>
+      <div class="ey">Packages</div>
+      <h2 class="st">PICK YOUR<br>PACKAGE</h2>
+    </div>
+    <p class="sb">Every wash uses quality products and comes with our satisfaction guarantee. No hidden fees — what you see is what you pay.</p>
+  </div>
+  <div class="sgrid stagger">
+    <div class="sc">
+      <div class="sc-n">01</div>
+      <div class="sc-name">Basic Wash</div>
+      <p class="sc-desc">Quick exterior rinse and wash — removes road dust, mud, and everyday grime. Perfect for regular upkeep.</p>
+      <div class="sc-price">₱150 <sub>/ wash</sub></div>
+      <ul class="sc-perks">
+        <li>Exterior hand wash</li>
+        <li>Wheel rinse</li>
+        <li>Wipe dry finish</li>
+      </ul>
+    </div>
+    <div class="sc">
+      <div class="sc-badge">Most Popular</div>
+      <div class="sc-n">02</div>
+      <div class="sc-name">Wash Plus</div>
+      <p class="sc-desc">Our signature full wash — foam exterior, interior vacuum, dash wipe, and tire dressing. The complete package.</p>
+      <div class="sc-price">₱350 <sub>/ wash</sub></div>
+      <ul class="sc-perks">
+        <li>Foam exterior wash</li>
+        <li>Microfiber hand dry</li>
+        <li>Tire shine & dressing</li>
+        <li>Interior vacuum</li>
+        <li>Dashboard wipe-down</li>
+      </ul>
+    </div>
+    <div class="sc">
+      <div class="sc-n">03</div>
+      <div class="sc-name">Full Detail</div>
+      <p class="sc-desc">Head-to-toe deep clean inside and out. Interior shampoo, wax coat, and odor treatment for a showroom look.</p>
+      <div class="sc-price">₱1,200 <sub>/ session</sub></div>
+      <ul class="sc-perks">
+        <li>All Wash Plus services</li>
+        <li>Full interior shampoo</li>
+        <li>Seat & carpet clean</li>
+        <li>Wax & polish coat</li>
+        <li>Odor neutralizer</li>
+        <li>Engine bay rinse</li>
+      </ul>
+    </div>
+    <div class="sc">
+      <div class="sc-n">04</div>
+      <div class="sc-name">SUV / Van</div>
+      <p class="sc-desc">All the quality of Wash Plus scaled up for larger vehicles — SUVs, vans, trucks, and AUVs all welcome.</p>
+      <div class="sc-price">₱500 <sub>starting</sub></div>
+      <ul class="sc-perks">
+        <li>Full Wash Plus service</li>
+        <li>3-row interior vacuum</li>
+        <li>Undercarriage spray</li>
+        <li>Extended wash time</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-hd reveal">
+    <div>
+      <div class="ey">Our Work</div>
+      <h2 class="st">THE RESULTS<br>SPEAK FOR<br>THEMSELVES</h2>
+    </div>
+    <p class="sb">From basic washes to full detailing jobs — every car leaves cleaner than it arrived.</p>
+  </div>
+  <div class="photo-grid">
+    <div class="pgp pg1">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="Car being washed" loading="lazy" />
+      <div class="pgp-label">Exterior Wash</div>
+    </div>
+    <div class="pgp pg2">
+      <img src="https://images.unsplash.com/photo-1613214049841-028981a2eb71?w=600&q=80" alt="Car detailing" loading="lazy" />
+      <div class="pgp-label">Hand Detailing</div>
+    </div>
+    <div class="pgp pg3">
+      <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=700&q=80" alt="Clean car" loading="lazy" />
+      <div class="pgp-label">Final Shine</div>
+    </div>
+    <div class="pgp pg4">
+      <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=500&q=80" alt="Tire cleaning" loading="lazy" />
+      <div class="pgp-label">Tire Dressing</div>
+    </div>
+    <div class="pgp pg5">
+      <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&q=80" alt="Interior cleaning" loading="lazy" />
+      <div class="pgp-label">Interior Detail</div>
+    </div>
+    <div class="pgp pg6">
+      <img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=600&q=80" alt="Car wax polish" loading="lazy" />
+      <div class="pgp-label">Wax & Polish</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-layout">
+    <div>
+      <div class="ey reveal">Process</div>
+      <h2 class="st reveal">HOW IT<br>WORKS</h2>
+      <p class="sb reveal" style="margin-bottom:3rem">Simple, fast, and no-fuss. Drive in, we handle everything — you drive out shining.</p>
+      <div class="steps stagger">
+        <div class="step">
+          <div class="step-n">01</div>
+          <div><h4>Book or Walk In</h4><p>Reserve your slot or simply drive in — walk-ins are always welcome. No appointment needed for basic washes.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-n">02</div>
+          <div><h4>We Assess Your Car</h4><p>Our team quickly checks your vehicle's condition and confirms the right package to get the best result.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-n">03</div>
+          <div><h4>Grab Food While You Wait</h4><p>Head to our food stall — enjoy cold milktea and fresh burgers while we take care of your car.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-n">04</div>
+          <div><h4>Drive Away Clean</h4><p>Inspect your car before leaving. Happy? Drive off. Not satisfied? We fix it on the spot — guaranteed.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="how-visual reveal-right">
+      <div class="how-photo-wrap">
+        <img class="how-photo" src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80" alt="Car wash in progress" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq" aria-hidden="true">
+  <div class="mq-t">
+    <span class="mqi">BY THE WAY WASH PLUS <span class="dot"></span></span>
+    <span class="mqi">MAGLIMAN SAN FERNANDO <span class="dot"></span></span>
+    <span class="mqi">CAR WASH & FOOD STALL <span class="dot"></span></span>
+    <span class="mqi">SATISFACTION GUARANTEED <span class="dot"></span></span>
+    <span class="mqi">OPEN DAILY <span class="dot"></span></span>
+    <span class="mqi">BY THE WAY WASH PLUS <span class="dot"></span></span>
+    <span class="mqi">MAGLIMAN SAN FERNANDO <span class="dot"></span></span>
+    <span class="mqi">CAR WASH & FOOD STALL <span class="dot"></span></span>
+    <span class="mqi">SATISFACTION GUARANTEED <span class="dot"></span></span>
+    <span class="mqi">OPEN DAILY <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- FOOD STALL -->
+<section class="food" id="food">
+  <div style="text-align:center; margin-bottom:4rem;" class="reveal">
+    <div class="ey ey-center">More Than A Car Wash</div>
+    <h2 class="st" style="font-size:clamp(3rem,8vw,5.5rem);">EAT WHILE<br>WE WASH</h2>
+    <p class="sb" style="margin:0 auto; text-align:center; max-width:500px;">
+      No more just sitting around waiting. Our on-site food stall serves cold milkteas, iced coffee, and juicy burgers while we clean your car.
+    </p>
+  </div>
+
+  <div style="margin-bottom:4rem;">
+    <div class="menu-section-label reveal">🧋 <span>Signature Drinks</span></div>
+    <div class="menu-grid stagger">
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&q=80" alt="White Mocha" loading="lazy" />
+          <div class="menu-img-label"><span>BTW</span></div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">White Mocha</div>
+          <div class="menu-sub">BTW Coffee Series</div>
+          <p class="menu-desc">Smooth, creamy white mocha — rich coffee flavor with every sip. A BTW customer favorite.</p>
+          <div class="menu-tag-row"><span class="mtag">Coffee</span><span class="mtag">Bestseller</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&q=80" alt="BTW Nutella Milktea" loading="lazy" />
+          <div class="menu-img-label"><span>BTW</span></div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">BTW Nutella</div>
+          <div class="menu-sub">Signature Milktea</div>
+          <p class="menu-desc">Indulgent Nutella milktea — chocolatey, creamy, and perfectly sweet. A crowd pleaser.</p>
+          <div class="menu-tag-row"><span class="mtag">Milktea</span><span class="mtag">Sweet</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=600&q=80" alt="BTW Matcha" loading="lazy" />
+          <div class="menu-img-label"><span>BTW</span></div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">BTW Matcha</div>
+          <div class="menu-sub">Matcha Milktea</div>
+          <p class="menu-desc">Premium matcha blended smooth with creamy milk. Earthy, refreshing, and balanced.</p>
+          <div class="menu-tag-row"><span class="mtag">Matcha</span><span class="mtag">Refreshing</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1497534446932-c925b458314e?w=600&q=80" alt="BTW Raspberry" loading="lazy" />
+          <div class="menu-img-label"><span>BTW</span></div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">BTW Raspberry</div>
+          <div class="menu-sub">Fruit Milktea</div>
+          <p class="menu-desc">Bold raspberry flavor with a milky finish — fruity, vibrant, and refreshingly cold.</p>
+          <div class="menu-tag-row"><span class="mtag">Fruit</span><span class="mtag">Fruity</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="menu-section-label reveal">🍔 <span>BTW Burgers</span></div>
+    <div class="menu-grid stagger">
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Classic Burger" loading="lazy" />
+          <div class="menu-img-label"><span>BTW</span></div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Classic Burger</div>
+          <div class="menu-sub">Made with Quality</div>
+          <p class="menu-desc">The OG BTW burger. Juicy patty, fresh veggies, and our house sauce on a soft toasted bun.</p>
+          <div class="menu-tag-row"><span class="mtag">Burger</span><span class="mtag">Classic</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=600&q=80" alt="BTW Chicken Burger" loading="lazy" />
+          <div class="menu-img-label"><span>BTW</span></div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">BTW Chicken Burger</div>
+          <div class="menu-sub">Sweet, Cool & Delicious</div>
+          <p class="menu-desc">Tender chicken fillet with lettuce, tomato, and BTW special sauce. Surprisingly good, every time.</p>
+          <div class="menu-tag-row"><span class="mtag">Chicken</span><span class="mtag">Juicy</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=600&q=80" alt="BTW Crispy Chicken Burger" loading="lazy" />
+          <div class="menu-img-label"><span>BTW</span></div>
+          <span class="menu-new">NEW</span>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">Crispy Chicken Burger</div>
+          <div class="menu-sub">Only ₱69</div>
+          <p class="menu-desc">Extra crispy golden chicken fillet loaded with toppings. Our newest addition — already a hit.</p>
+          <div class="menu-tag-row"><span class="mtag">Crispy</span><span class="mtag">New Item</span></div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&q=80" alt="By The Way Burger" loading="lazy" />
+          <div class="menu-img-label"><span>BTW</span></div>
+        </div>
+        <div class="menu-body">
+          <div class="menu-name">By The Way Burger</div>
+          <div class="menu-sub">The Signature</div>
+          <p class="menu-desc">Our namesake burger — loaded, bold, and built to satisfy. The one that put BTW on the map.</p>
+          <div class="menu-tag-row"><span class="mtag">Signature</span><span class="mtag">Bestseller</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="food-cta-strip reveal">
+    <p>WASH. EAT. REPEAT.</p>
+    <p>Visit us in Magliman — your car gets cleaned while you enjoy cold drinks and fresh burgers.</p>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-hd">
+    <div class="reveal">
+      <div class="ey">Why Choose Us</div>
+      <h2 class="st">BUILT FOR<br>CAR OWNERS<br>WHO CARE</h2>
+    </div>
+    <p class="sb reveal">We treat every car like it's our own — with attention, care, and products that actually protect your paint.</p>
+  </div>
+  <div class="wgrid stagger">
+    <div class="wc"><span class="wc-icon">🧴</span><h4>Quality Products Only</h4><p>Professional-grade soaps and waxes that protect your paint and won't leave swirl marks or residue behind.</p></div>
+    <div class="wc"><span class="wc-icon">⚡</span><h4>Fast Turnaround</h4><p>Most washes done in 20–45 minutes. In and out — so you're never waiting longer than you need to.</p></div>
+    <div class="wc"><span class="wc-icon">🛡️</span><h4>100% Satisfaction</h4><p>Not happy? We'll redo it immediately, no questions asked. Your car leaves clean or we fix it.</p></div>
+    <div class="wc"><span class="wc-icon">👨‍🔧</span><h4>Experienced Staff</h4><p>Our crew knows how to handle every type of vehicle with care. No amateur mistakes, no cut corners.</p></div>
+    <div class="wc"><span class="wc-icon">🍔</span><h4>Food Stall On-Site</h4><p>Grab a cold milktea or a fresh burger while you wait. Your car gets cleaned, your stomach gets fed.</p></div>
+    <div class="wc"><span class="wc-icon">📍</span><h4>Convenient Location</h4><p>Easy to find along the main road in Magliman, San Fernando — accessible from all directions.</p></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-hd reveal">
+    <div class="ey ey-center">Customer Reviews</div>
+    <h2 class="st">WHAT THEY SAY</h2>
+    <p class="sb">Real feedback from real customers. Find us on Facebook — By The Way (Main).</p>
+  </div>
+  <div class="rgrid stagger">
+    <div class="rc">
+      <div class="stars">★★★★★</div>
+      <p class="rc-text">"Napakaganda ng trabaho nila! Full detail ang kinuha ko and hindi ako disappointed. Parang bago ang loob ng kotse ko. Tapos may milktea pa sa tabi — super convenient! Babalik ako palagi."</p>
+      <div class="rc-author"><div class="av">JM</div><div><div class="av-n">Jun Mendoza</div><div class="av-t">Full Detail Package</div></div></div>
+    </div>
+    <div class="rc">
+      <div class="stars">★★★★★</div>
+      <p class="rc-text">"Always come here for my car. Mabilis, mura, at linis na linis. Yung Wash Plus is the best value. At yung food stall — sulit! Masarap yung burger habang naghihintay."</p>
+      <div class="rc-author"><div class="av">RL</div><div><div class="av-n">Rina Lacap</div><div class="av-t">Regular Customer · Wash Plus</div></div></div>
+    </div>
+    <div class="rc">
+      <div class="stars">★★★★★</div>
+      <p class="rc-text">"Dalawa na ang sasakyan ko na pinapunta ko dito. Consistent lagi ang kalidad. Highly recommend sa lahat ng may kotse sa San Fernando. Maganda rin na may pagkain para sa naghihintay!"</p>
+      <div class="rc-author"><div class="av">ED</div><div><div class="av-n">Edgar Dela Paz</div><div class="av-t">Loyal Customer · SUV Package</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="mq" aria-hidden="true">
+  <div class="mq-t">
+    <span class="mqi">CLEAN CAR <span class="dot"></span></span>
+    <span class="mqi">COLD MILKTEA <span class="dot"></span></span>
+    <span class="mqi">FRESH BURGERS <span class="dot"></span></span>
+    <span class="mqi">BY THE WAY <span class="dot"></span></span>
+    <span class="mqi">CLEAN CAR <span class="dot"></span></span>
+    <span class="mqi">COLD MILKTEA <span class="dot"></span></span>
+    <span class="mqi">FRESH BURGERS <span class="dot"></span></span>
+    <span class="mqi">BY THE WAY <span class="dot"></span></span>
+    <span class="mqi">CLEAN CAR <span class="dot"></span></span>
+    <span class="mqi">COLD MILKTEA <span class="dot"></span></span>
+    <span class="mqi">FRESH BURGERS <span class="dot"></span></span>
+    <span class="mqi">BY THE WAY <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- LOCATION -->
+<section class="location" id="location">
+  <div class="loc-layout">
+    <div class="loc-info">
+      <div class="ey reveal">Find Us</div>
+      <h2 class="st reveal">COME<br>VISIT US</h2>
+      <div class="loc-details stagger">
+        <div class="ld">
+          <div class="ld-icon">📍</div>
+          <div><h5>Address</h5><p>Magliman, San Fernando, Pampanga<br>Philippines</p></div>
+        </div>
+        <div class="ld">
+          <div class="ld-icon">⏰</div>
+          <div><h5>Hours</h5><p>Monday – Sunday<br>7:00 AM – 8:00 PM</p></div>
+        </div>
+        <div class="ld">
+          <div class="ld-icon">📱</div>
+          <div><h5>Contact</h5><p>Message us on Facebook<br><strong style="color:var(--white)">By The Way (Main)</strong></p></div>
+        </div>
+        <div class="ld">
+          <div class="ld-icon">🚗</div>
+          <div><h5>Parking</h5><p>Free on-site parking available.<br>Walk-ins welcome anytime.</p></div>
+        </div>
+      </div>
+      <div style="margin-top:2.5rem">
+        <a href="https://www.google.com/maps?q=15.03629390273838,120.6627020363638" target="_blank" class="btn btn-w">Open in Google Maps</a>
+      </div>
+    </div>
+    <div class="loc-map">
+      <iframe
+        class="map-frame"
+        src="https://www.google.com/maps?q=15.03629390273838,120.6627020363638&z=16&output=embed"
+        allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="By The Way Wash Plus Location">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="book">
+  <div class="cta-wm">BTW</div>
+  <h2 class="reveal">GET YOUR<br><span class="out-dk">CAR CLEAN</span><br>TODAY.</h2>
+  <p class="reveal">Walk in anytime at Magliman, San Fernando — or message us on Facebook to book your slot.</p>
+  <a href="https://www.facebook.com" target="_blank" class="btn btn-dk reveal">Message Us on Facebook</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div class="fbrand">
+      <div class="fl">BY THE WAY</div>
+      <div class="flt">Wash Plus</div>
+      <p>Professional car washing, detailing, and a food stall in Magliman, San Fernando, Pampanga. Open every day — walk-ins always welcome.</p>
+    </div>
+    <div class="fc">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#">Basic Wash</a></li>
+        <li><a href="#">Wash Plus</a></li>
+        <li><a href="#">Full Detail</a></li>
+        <li><a href="#">SUV & Van</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Explore</h5>
+      <ul>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#food">Food Stall</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#location">Location</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="#">📍 Magliman, San Fernando</a></li>
+        <li><a href="#">📱 Message on Facebook</a></li>
+        <li><a href="#">⏰ Open Daily 7AM – 8PM</a></li>
+        <li><a href="https://facebook.com" target="_blank">🔵 Facebook Page</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fb">
+    <p>© 2026 By The Way Wash Plus · Magliman, San Fernando, Pampanga 🇵🇭</p>
+    <p>Sample website — for presentation purposes</p>
+  </div>
+</footer>
+
+<div class="social-bar">
+  <span class="sb-label">Follow us</span>
+  <div class="sb-links">
+    <a href="https://facebook.com" target="_blank">Facebook — By The Way (Main)</a>
+  </div>
+</div>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
