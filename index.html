@@ -98,6 +98,7 @@
 
     .hero-img {
       position: absolute; inset: 0;
+      /* TO REPLACE: change URL below to: url('images/hero/hero-bg.jpg') */
       background: url('https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=1800&q=80') center/cover no-repeat;
     }
     /* dark gradient + subtle vignette */
@@ -188,78 +189,86 @@
     .sb { color: var(--glt); font-weight: 300; max-width: 420px; line-height: 1.75; font-size: .94rem; }
 
     /* ── SECTION BACKGROUND VARIANTS ── */
-    /* Services — very faint tiled diagonal lines */
-    .services {
-      background: var(--black2);
-      position: relative;
-    }
+
+    /* Services — diagonal hairlines + blurred glow top-right */
+    .services { background: var(--black2); position: relative; overflow: hidden; }
     .services::before {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
+      content: ''; position: absolute; inset: 0; pointer-events: none;
       background-image: repeating-linear-gradient(
-        -55deg,
-        rgba(255,255,255,.012) 0px,
-        rgba(255,255,255,.012) 1px,
-        transparent 1px,
-        transparent 38px
+        -55deg, rgba(255,255,255,.018) 0px, rgba(255,255,255,.018) 1px,
+        transparent 1px, transparent 40px
+      );
+    }
+    .services::after {
+      content: ''; position: absolute; top: -200px; right: -100px;
+      width: 600px; height: 600px; pointer-events: none;
+      background: radial-gradient(circle, rgba(255,255,255,.07) 0%, transparent 65%);
+      filter: blur(60px); z-index: 0;
+    }
+
+    /* Gallery — dark with center glow behind the grid */
+    .gallery { background: var(--black); padding: 80px 5%; position: relative; overflow: hidden; }
+    .gallery::before {
+      content: ''; position: absolute; top: 40%; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 500px; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(255,255,255,.05) 0%, transparent 70%);
+      filter: blur(50px);
+    }
+
+    /* How — large blurred glow top-right */
+    .how { background: var(--black2); position: relative; overflow: hidden; }
+    .how::before {
+      content: ''; position: absolute; top: -15%; right: -8%;
+      width: 700px; height: 700px; pointer-events: none;
+      background: radial-gradient(circle, rgba(255,255,255,.07) 0%, transparent 60%);
+      filter: blur(90px);
+    }
+
+    /* Food — dot grid + blurred glow bottom-left */
+    .food { background: var(--black); position: relative; overflow: hidden; }
+    .food::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,.10) 1px, transparent 1px);
+      background-size: 30px 30px; opacity: .13;
+    }
+    .food::after {
+      content: ''; position: absolute; bottom: -150px; left: -100px;
+      width: 600px; height: 600px; pointer-events: none;
+      background: radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 65%);
+      filter: blur(70px);
+    }
+
+    /* Why — blurred glow left + faint horizontal rule lines */
+    .why { background: var(--black2); position: relative; overflow: hidden; }
+    .why::before {
+      content: ''; position: absolute; bottom: -20%; left: -10%;
+      width: 700px; height: 700px; pointer-events: none;
+      background: radial-gradient(circle, rgba(255,255,255,.07) 0%, transparent 65%);
+      filter: blur(80px);
+    }
+    .why::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: repeating-linear-gradient(
+        0deg, rgba(255,255,255,.015) 0px, rgba(255,255,255,.015) 1px,
+        transparent 1px, transparent 72px
       );
     }
 
-    /* Gallery — plain dark */
-    .gallery { background: var(--black); padding: 80px 5%; }
-
-    /* How — faint radial glow center */
-    .how {
-      background: var(--black2);
-      position: relative;
-      overflow: hidden;
-    }
-    .how::before {
-      content: '';
-      position: absolute; top: -20%; right: -10%;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(255,255,255,.025) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    /* Food — very faint dot grid */
-    .food {
-      background: var(--black);
-      position: relative;
-    }
-    .food::before {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
-      background-image: radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: .18;
-    }
-
-    /* Why — faint radial glow left */
-    .why {
-      background: var(--black2);
-      position: relative;
-      overflow: hidden;
-    }
-    .why::before {
-      content: '';
-      position: absolute; bottom: -20%; left: -10%;
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(255,255,255,.022) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    /* Reviews — subtle cross-hatch */
-    .reviews {
-      background: var(--black);
-      position: relative;
-    }
+    /* Reviews — cross-hatch + center glow */
+    .reviews { background: var(--black); position: relative; overflow: hidden; }
     .reviews::before {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
+      content: ''; position: absolute; inset: 0; pointer-events: none;
       background-image:
-        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 60px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 60px);
+        repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0px, rgba(255,255,255,.028) 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.028) 0px, rgba(255,255,255,.028) 1px, transparent 1px, transparent 64px);
+    }
+    .reviews::after {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px; height: 400px; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(255,255,255,.04) 0%, transparent 65%);
+      filter: blur(50px);
     }
 
     /* ── SERVICES ── */
@@ -547,15 +556,104 @@
     @media(prefers-reduced-motion:reduce){
       .ticker-t,.mq-t,.reveal,.reveal-left,.reveal-right,.stagger>* { animation:none !important; transition:none !important; opacity:1 !important; transform:none !important; }
     }
+
+    /* ── BTW LOGO ── */
+    @keyframes spin-ccw {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
+    }
+
+    .btw-logo {
+      display: inline-block;
+      animation: spin-ccw 12s linear infinite;
+      will-change: transform;
+    }
+    /* Nav logo */
+    .nav-logo-wrap {
+      display: flex; align-items: center; gap: 12px; text-decoration: none;
+    }
+    .nav-logo-wrap .btw-logo {
+      width: 42px; height: 42px;
+      filter: invert(1); /* white logo on dark bg */
+    }
+    .nav-logo-text { display: flex; flex-direction: column; }
+    .nav-logo-text .logo-main { font-family: var(--D); font-size: 1.4rem; letter-spacing: .07em; color: var(--pure); line-height: 1; display: block; }
+    .nav-logo-text .logo-sub  { font-size: .52rem; font-weight: 700; letter-spacing: .26em; color: var(--glt); text-transform: uppercase; margin-top: 2px; display: block; }
+
+    /* Hero logo */
+    .hero-logo-badge {
+      position: absolute; top: 50%; right: 6%;
+      transform: translateY(-50%);
+      z-index: 2; pointer-events: none;
+    }
+    .hero-logo-badge .btw-logo {
+      width: clamp(140px, 16vw, 220px);
+      height: clamp(140px, 16vw, 220px);
+      filter: invert(1);
+      opacity: .12;
+    }
+
+    /* Footer logo */
+    .footer-logo-wrap {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 1rem;
+    }
+    .footer-logo-wrap .btw-logo {
+      width: 52px; height: 52px;
+      filter: invert(1);
+      opacity: .85;
+    }
+    .footer-logo-text {}
+
+    /* Pause spin on hover (nice touch) */
+    .nav-logo-wrap:hover .btw-logo,
+    .footer-logo-wrap:hover .btw-logo {
+      animation-play-state: paused;
+    }
+
   </style>
 </head>
 <body>
 
+<!--
+====================================================
+  FOLDER STRUCTURE — organize your files like this:
+  bytheway-website/
+  ├── index.html
+  └── images/
+      ├── hero/
+      │   └── hero-bg.jpg          (1800x1000px)
+      ├── gallery/
+      │   ├── gallery-1.jpg        (900x600px)
+      │   ├── gallery-2.jpg
+      │   ├── gallery-3.jpg
+      │   ├── gallery-4.jpg
+      │   ├── gallery-5.jpg
+      │   └── gallery-6.jpg
+      ├── food/
+      │   ├── white-mocha.jpg      (600x450px)
+      │   ├── btw-nutella.jpg
+      │   ├── btw-matcha.jpg
+      │   ├── btw-raspberry.jpg
+      │   ├── classic-burger.jpg
+      │   ├── chicken-burger.jpg
+      │   ├── crispy-chicken.jpg
+      │   └── btw-burger.jpg
+      └── carwash/
+          └── how-it-works.jpg     (800x1000px)
+
+  TIP: Compress all photos at squoosh.app (set to 80%)
+       before uploading to keep the site fast.
+====================================================
+-->
+
 <!-- NAV -->
 <nav id="nav">
-  <a class="logo" href="#">
-    <span class="logo-main">BY THE WAY</span>
-    <span class="logo-sub">Wash Plus · San Fernando, Pampanga</span>
+  <a class="nav-logo-wrap" href="#">
+    <img src="btw-logo.png" alt="By The Way Logo" class="btw-logo" width="42" height="42" />
+    <span class="nav-logo-text">
+      <span class="logo-main">BY THE WAY</span>
+      <span class="logo-sub">Wash Plus · San Fernando, Pampanga</span>
+    </span>
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
@@ -570,6 +668,9 @@
 <section class="hero" id="home">
   <div class="hero-img"></div>
   <div class="hero-wm">BTW</div>
+  <div class="hero-logo-badge">
+    <img src="btw-logo.png" alt="" class="btw-logo" />
+  </div>
   <div class="hero-glow"></div>
   <div class="hero-content">
     <div class="hero-pill"><span></span> Magliman, San Fernando Pampanga</div>
@@ -667,13 +768,14 @@
     </div>
     <p class="sb">From basic washes to full detailing jobs — every car leaves cleaner than it arrived.</p>
   </div>
+  <!-- PHOTO GRID: replace each src with images/gallery/gallery-1.jpg ... gallery-6.jpg -->
   <div class="photo-grid">
     <div class="pgp pg1">
       <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="Car being washed" loading="lazy" />
       <div class="pgp-label">Exterior Wash</div>
     </div>
     <div class="pgp pg2">
-      <img src="https://images.unsplash.com/photo-1613214049841-028981a2eb71?w=600&q=80" alt="Car detailing" loading="lazy" />
+      <img src="carwash 2.jpg" alt="Car detailing" loading="lazy" />
       <div class="pgp-label">Hand Detailing</div>
     </div>
     <div class="pgp pg3">
@@ -692,6 +794,16 @@
       <img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=600&q=80" alt="Car wax polish" loading="lazy" />
       <div class="pgp-label">Wax & Polish</div>
     </div>
+  </div>
+
+  <!-- ↓ Replace Unsplash links above with: images/gallery/gallery-1.jpg etc. -->
+  <div style="text-align:center; margin-top:2.2rem; position:relative; z-index:1;">
+    <a href="https://web.facebook.com/bythe.way.50364/photos"
+       target="_blank"
+       class="btn btn-o"
+       style="font-size:.78rem;">
+      See All Photos on Facebook →
+    </a>
   </div>
 </section>
 
@@ -723,6 +835,7 @@
     </div>
     <div class="how-visual reveal-right">
       <div class="how-photo-wrap">
+        <!-- REPLACE: src="images/carwash/how-it-works.jpg" -->
         <img class="how-photo" src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80" alt="Car wash in progress" loading="lazy" />
       </div>
     </div>
@@ -755,6 +868,7 @@
     </p>
   </div>
 
+  <!-- DRINKS: replace each src below with images/food/white-mocha.jpg, btw-nutella.jpg, btw-matcha.jpg, btw-raspberry.jpg -->
   <div style="margin-bottom:4rem;">
     <div class="menu-section-label reveal">🧋 <span>Signature Drinks</span></div>
     <div class="menu-grid stagger">
@@ -809,6 +923,7 @@
     </div>
   </div>
 
+  <!-- BURGERS: replace each src below with images/food/classic-burger.jpg, chicken-burger.jpg, crispy-chicken.jpg, btw-burger.jpg -->
   <div>
     <div class="menu-section-label reveal">🍔 <span>BTW Burgers</span></div>
     <div class="menu-grid stagger">
@@ -985,8 +1100,13 @@
 <footer>
   <div class="ft">
     <div class="fbrand">
-      <div class="fl">BY THE WAY</div>
-      <div class="flt">Wash Plus</div>
+      <div class="footer-logo-wrap">
+        <img src="btw-logo.png" alt="By The Way Logo" class="btw-logo" width="52" height="52" />
+        <div class="footer-logo-text">
+          <div class="fl">BY THE WAY</div>
+          <div class="flt">Wash Plus</div>
+        </div>
+      </div>
       <p>Professional car washing, detailing, and a food stall in Magliman, San Fernando, Pampanga. Open every day — walk-ins always welcome.</p>
     </div>
     <div class="fc">
@@ -1019,7 +1139,7 @@
   </div>
   <div class="fb">
     <p>© 2026 By The Way Wash Plus · Magliman, San Fernando, Pampanga 🇵🇭</p>
-    <p>Sample website — for presentation purposes</p>
+    <p>Website by <strong style="color:var(--silver)">BTW Digital</strong></p>
   </div>
 </footer>
 
